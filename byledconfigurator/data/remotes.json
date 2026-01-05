@@ -1,0 +1,38 @@
+[
+    {
+        "id": 1,
+        "name": "Télécommande pour ruban LED digital - MiBoxer C6",
+        "image_url": "/public/images/products/Remote_C6.png",
+        "reference": "COM-TEL-MUR-DIG-RGBW-C6-N",
+        "type": "UNIVERSAL",
+        "control_type": "RF",
+        "voltage": 0,
+        "max_power": 999,
+        "price": 9.93,
+        "compatible_with_controllers": ["SPIR3-M", "SPIR3"]
+    },
+    {
+        "id": 2,
+        "name": "Télécommande pour ruban LED digital - Multi-scènes - MiBoxer C9",
+        "image_url": "/public/images/products/Remote_C9.png",
+        "reference": "COM-TEL-MUR-DIG-RGBW-C9-N",
+        "type": "UNIVERSAL",
+        "control_type": "RF",
+        "voltage": 0,
+        "max_power": 999,
+        "price": 11.27,
+        "compatible_with_controllers": ["SPIW5"]
+    },
+    {
+        "id": 3,
+        "name": "Télécommande murale pour ruban LED digital - MiBoxer B6 - Noir",
+        "image_url": "/public/images/products/Remote_B6.png",
+        "reference": "COM-TEL-MUR-DIG-RGB/W-B6-N",
+        "type": "UNIVERSAL",
+        "control_type": "RF",
+        "voltage": 0,
+        "max_power": 999,
+        "price": 19.93,
+        "compatible_with_controllers": ["SPIR3-M", "SPIR3"]
+    }
+]

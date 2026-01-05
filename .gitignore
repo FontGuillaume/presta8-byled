@@ -1,0 +1,68 @@
+# ========================================
+# IMAGES (ne pas versionner)
+# ========================================
+byledconfigurator/public/images/
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.svg
+*.webp
+
+# ========================================
+# DONNÉES SENSIBLES
+# ========================================
+# Fichiers de configuration avec credentials
+.env
+.env.local
+.env.*.local
+config/database.php
+config/credentials.php
+
+# Logs et données temporaires
+*.log
+*.sql
+*.backup
+*.bak
+
+# ========================================
+# ENVIRONNEMENT DOCKER
+# ========================================
+docker-compose.override.yml
+
+# ========================================
+# CACHE & TEMPORAIRE
+# ========================================
+# Cache système
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# Cache IDE
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# ========================================
+# NODE & DEPENDENCIES (si utilisé)
+# ========================================
+node_modules/
+npm-debug.log
+yarn-error.log
+package-lock.json
+
+# ========================================
+# PHP
+# ========================================
+vendor/
+composer.lock
+
+# ========================================
+# PRESTASHOP (si intégré)
+# ========================================
+# Ne pas inclure ces dossiers si installé dans PrestaShop
+/var/cache/
+/var/logs/

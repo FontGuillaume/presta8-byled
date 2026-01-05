@@ -1,0 +1,3656 @@
+/* ========== RESET & BASE ========== */
+/* Reset scopé au configurateur uniquement */
+#byled-configurator,
+#byled-configurator *,
+#byled-configurator *::before,
+#byled-configurator *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Styles du conteneur principal + variables CSS scopées */
+#byled-configurator {
+    /* Variables CSS scopées au configurateur uniquement */
+    --primary-blue: #0066FF;
+    --primary-blue-dark: #0052CC;
+    --success-green: #28a745;
+    --warning-orange: #ff9800;
+    --text-dark: #1a1a1a;
+    --text-gray: #666666;
+    --border-light: #e5e7eb;
+    --bg-light: #f9fafb;
+    --bg-white: #ffffff;
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+    
+    /* Styles du conteneur */
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: var(--bg-light);
+    color: var(--text-dark);
+    line-height: 1.6;
+    overflow-x: hidden;
+    min-height: 100vh;
+    padding-top: 120px;
+    max-width: 100vw;
+}
+
+#byled-configurator .hidden {
+    display: none !important;
+}
+
+/* ========== HEADER ========== */
+#byled-configurator .header {
+    background: var(--bg-white);
+    border-bottom: 1px solid var(--border-light);
+    padding: 16px 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 101;
+    box-shadow: var(--shadow-sm);
+}
+
+#byled-configurator .header-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#byled-configurator .logo {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--primary-blue);
+    margin: 0;
+}
+
+/* ========== STEPPER ========== */
+#byled-configurator .stepper {
+    max-width: 700px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#byled-configurator .stepper-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    flex: 0 0 auto;
+    position: relative;
+}
+
+#byled-configurator .stepper-circle {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--bg-light);
+    border: 2px solid var(--border-light);
+    color: var(--text-gray);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 13px;
+    transition: all 0.2s ease;
+}
+
+/* Étape active (en cours) */
+#byled-configurator .stepper-step.active .stepper-circle {
+    background: var(--primary-blue);
+    border-color: var(--primary-blue);
+    color: white;
+    box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.15);
+}
+
+#byled-configurator .stepper-step.active.completed .stepper-circle {
+    background: var(--success-green);
+    border-color: var(--success-green);
+    box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.18);
+}
+
+/* Étape complétée */
+#byled-configurator .stepper-step.completed .stepper-circle {
+    background: var(--success-green);
+    border-color: var(--success-green);
+    color: white;
+    cursor: pointer;
+}
+
+#byled-configurator .stepper-step.completed {
+    cursor: pointer;
+}
+
+#byled-configurator .stepper-step.completed:hover .stepper-circle {
+    background: #1e7e34;
+    border-color: #1e7e34;
+    transform: scale(1.08);
+}
+
+/* Étape incomplète (non visitée) */
+#byled-configurator .stepper-step.incomplete .stepper-circle {
+    background: white;
+    border-color: var(--warning-orange);
+    color: var(--warning-orange);
+}
+
+#byled-configurator .stepper-step.completed .stepper-label {
+    color: var(--success-green);
+    cursor: pointer;
+}
+
+#byled-configurator .stepper-label {
+    font-size: 11px;
+    color: var(--text-gray);
+    font-weight: 500;
+    white-space: nowrap;
+    text-align: center;
+}
+
+#byled-configurator .stepper-step.active .stepper-label {
+    color: var(--primary-blue);
+    font-weight: 600;
+}
+
+#byled-configurator .stepper-step.active.completed .stepper-label {
+    color: var(--success-green);
+}
+
+#byled-configurator .stepper-step.incomplete .stepper-label {
+    color: var(--warning-orange);
+}
+
+#byled-configurator .stepper-line {
+    flex: 1;
+    height: 3px;
+    background: linear-gradient(to right, var(--border-light) 0%, #d9d9d9 100%);
+    margin: 0 8px;
+    align-self: flex-start;
+    margin-top: 16px;
+    position: relative;
+    border-radius: 999px;
+    overflow: visible;
+}
+
+#byled-configurator .stepper-line::after {
+    content: '';
+    position: absolute;
+    right: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-style: solid;
+    border-width: 6px 0 6px 10px;
+    border-color: transparent transparent transparent #d9d9d9;
+    transition: border-color 0.2s ease;
+}
+
+/* Ligne de progression */
+#byled-configurator .stepper-step.completed + .stepper-line {
+    background: linear-gradient(to right, var(--success-green) 0%, #b3e0c2 100%);
+}
+
+#byled-configurator .stepper-step.completed + .stepper-line::after {
+    border-color: transparent transparent transparent var(--success-green);
+}
+
+#byled-configurator .stepper-step.active + .stepper-line {
+    background: linear-gradient(to right, var(--primary-blue) 0%, #a4c4ff 100%);
+}
+
+#byled-configurator .stepper-step.active + .stepper-line::after {
+    border-color: transparent transparent transparent var(--primary-blue);
+}
+
+/* ========== LAYOUT PRINCIPAL ========== */
+#byled-configurator .main-layout {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 32px 24px;
+    display: flex;
+    gap: 32px;
+    align-items: flex-start;
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#byled-configurator .configurator-column {
+    flex: 1;
+    min-width: 0;
+    position: relative;
+}
+
+#byled-configurator .cart-column {
+    flex: 0 0 280px;
+    width: 280px;
+    position: relative;
+    align-self: flex-start;
+}
+
+#byled-configurator .configurator-column {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+#byled-configurator .step {
+    background: var(--bg-white);
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-light);
+    width: 100%;
+    max-width: 100%;
+    overflow: visible;
+}
+
+#byled-configurator .step-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 20px;
+}
+
+/* Header avec titre + tooltip */
+#byled-configurator .step-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+#byled-configurator .step-header .step-title {
+    margin-bottom: 0;
+}
+
+/* Icône tooltip */
+#byled-configurator .tooltip-icon {
+    font-size: 16px;
+    width: 24px;
+    height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #e3f2fd;
+    color: var(--primary-blue);
+    border-radius: 50%;
+    cursor: help;
+    position: relative;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+#byled-configurator .tooltip-icon:hover {
+    background: var(--primary-blue);
+    color: white;
+    transform: scale(1.1);
+}
+
+/* Tooltip content (apparaît au hover) */
+#byled-configurator .tooltip-icon::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: calc(100% + 12px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: #1f2937;
+    color: white;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 12px;
+    line-height: 1.6;
+    white-space: pre-line;
+    width: 320px;
+    max-width: calc(100vw - 40px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    z-index: 10000;
+    font-weight: 400;
+    text-align: left;
+}
+
+/* Flèche du tooltip */
+#byled-configurator .tooltip-icon::before {
+    content: '';
+    position: absolute;
+    bottom: calc(100% + 4px);
+    left: 50%;
+    transform: translateX(-50%);
+    border: 8px solid transparent;
+    border-top-color: #1f2937;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    z-index: 10001;
+}
+
+/* Affichage au hover */
+#byled-configurator .tooltip-icon:hover::after,
+#byled-configurator .tooltip-icon:hover::before {
+    opacity: 1;
+}
+
+#byled-configurator .tooltip-icon:hover::after {
+    transform: translateX(-50%) translateY(-4px);
+}
+
+/* ========== GRILLE PRODUITS ========== */
+#byled-configurator .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 2px;
+    width: 100%;
+    margin: 0;
+}
+
+/* ========== SECTION ALIMENTATION (NOUVEAU DESIGN) ========== */
+#byled-configurator .supply-section-wrapper {
+    background: linear-gradient(135deg, #fffbf0 0%, #fffef9 100%);
+    border: 2px solid rgba(245, 158, 11, 0.2);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 2px 12px rgba(245, 158, 11, 0.08);
+    width: 100%;
+    max-width: 100%;
+    overflow: visible;
+}
+
+#byled-configurator .supply-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+#byled-configurator .supply-header-icon {
+    font-size: 32px;
+    color: #f59e0b;
+    opacity: 0.85;
+}
+
+#byled-configurator .supply-header-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1f2937;
+    margin: 0;
+}
+
+#byled-configurator .supply-power-info {
+    font-size: 15px;
+    color: #374151;
+    margin-bottom: 12px;
+}
+
+#byled-configurator .supply-power-info strong {
+    color: #000;
+    font-weight: 700;
+}
+
+#byled-configurator .supply-recommendation {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 24px;
+    line-height: 1.5;
+}
+
+#byled-configurator .supplies-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 2px;
+    width: 100%;
+    margin: 0;
+}
+
+/* Carte alimentation */
+#byled-configurator .supply-card {
+    background: white;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 10px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-height: 300px;
+    width: 100%;
+}
+
+#byled-configurator .supply-card:hover {
+    border-color: #3b82f6;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+    transform: translateY(-2px);
+}
+
+#byled-configurator .supply-card.incompatible {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+#byled-configurator .supply-card.incompatible:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+/* Badge de statut (Recommandé / Compatible) */
+#byled-configurator .supply-status-badge {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    padding: 4px 10px;
+    border-radius: 16px;
+    font-size: 11px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    z-index: 10;
+}
+
+#byled-configurator .supply-status-badge.recommended {
+    background: #10b981;
+    color: white;
+}
+
+#byled-configurator .supply-status-badge.compatible {
+    background: #3b82f6;
+    color: white;
+}
+
+#byled-configurator .badge-icon {
+    font-size: 12px;
+}
+
+/* Icône info */
+#byled-configurator .supply-info-icon {
+    position: absolute !important;
+    top: 8px !important;
+    right: 8px !important;
+    width: 20px;
+    height: 20px;
+    background: transparent;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    cursor: help;
+    z-index: 10001;
+    transition: all 0.2s ease;
+}
+
+#byled-configurator .supply-info-icon:hover {
+    transform: scale(1.2);
+}
+
+/* Tooltip pour l'icône info */
+#byled-configurator .supply-info-icon[data-tooltip] {
+    position: relative;
+}
+
+#byled-configurator .supply-info-icon[data-tooltip]::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: calc(100% + 12px);
+    left: 50%;
+    transform: translateX(-50%) translateY(8px) scale(0.95);
+    background: #1a1a1a;
+    color: #ffffff;
+    padding: 14px 16px;
+    border-radius: 8px;
+    border: none;
+    font-size: 11.5px;
+    line-height: 1.65;
+    white-space: pre-line;
+    max-width: min(300px, calc(100vw - 40px));
+    min-width: min(240px, calc(100vw - 60px));
+    width: max-content;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 10000;
+    box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.3),
+        0 8px 16px rgba(0, 0, 0, 0.2);
+    font-weight: 400;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+    letter-spacing: 0.01em;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: left;
+}
+
+#byled-configurator .supply-info-icon[data-tooltip]::after {
+    content: '';
+    position: absolute;
+    bottom: calc(100% + 4px);
+    left: 50%;
+    transform: translateX(-50%) translateY(4px) scale(0.95);
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid #1a1a1a;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 10000;
+}
+
+#byled-configurator .supply-info-icon[data-tooltip]:hover::before,
+#byled-configurator .supply-info-icon[data-tooltip]:hover::after {
+    opacity: 1;
+}
+
+#byled-configurator .supply-info-icon[data-tooltip]:hover::before {
+    transform: translateX(-50%) translateY(0);
+}
+
+#byled-configurator .supply-info-icon[data-tooltip]:hover::after {
+    transform: translateX(-50%) translateY(0);
+}
+
+/* Image alimentation */
+#byled-configurator .supply-image {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 14px 0 6px 0;
+}
+
+#byled-configurator .supply-image img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+#byled-configurator .supply-placeholder {
+    background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+    border-radius: 8px;
+}
+
+#byled-configurator .supply-icon {
+    font-size: 56px;
+    opacity: 0.3;
+}
+
+/* Nom et référence */
+#byled-configurator .supply-name {
+    font-size: 12px;
+    font-weight: 600;
+    color: #1f2937;
+    text-align: center;
+    line-height: 1.3;
+    min-height: 32px;
+    max-height: 32px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    word-break: break-word;
+}
+
+#byled-configurator .supply-reference {
+    font-size: 10px;
+    color: #6b7280;
+}
+
+/* Prix */
+#byled-configurator .supply-price {
+    font-size: 13px;
+    font-weight: 700;
+    color: #3b82f6;
+    margin: 2px 0;
+}
+
+/* Badge de câblage */
+#byled-configurator .supply-wiring-badge {
+    padding: 3px 8px;
+    border-radius: 14px;
+    font-size: 10px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    text-align: center;
+    margin: 0 auto;
+    width: fit-content;
+}
+
+#byled-configurator .supply-wiring-badge.warning {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+#byled-configurator .supply-wiring-badge.success {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+#byled-configurator .warning-icon {
+    font-size: 8px;
+}
+
+#byled-configurator .check-icon {
+    font-size: 10px;
+}
+
+/* Bouton de sélection */
+#byled-configurator .supply-select-btn {
+    width: 100%;
+    padding: 8px 12px;
+    background: white;
+    color: #1f2937;
+    border: 2px solid #1f2937;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: auto;
+}
+
+#byled-configurator .supply-select-btn:hover {
+    background: #f3f4f6;
+}
+
+#byled-configurator .supply-select-btn.selected {
+    background: #1f2937;
+    color: white;
+}
+
+#byled-configurator .supply-select-btn.selected:hover {
+    background: #111827;
+}
+
+/* ========== CARTE PRODUIT ========== */
+
+/* Images produits avec background */
+#byled-configurator .product-image.has-image {
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: #f8f9fa;
+}
+
+#byled-configurator .product-image.has-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    max-width: 100%;
+}
+
+#byled-configurator .product-image.gradient-rgb {
+    background: linear-gradient(135deg, #74b9ff 0%, #74b9ffdd 100%);
+}
+
+#byled-configurator .product-image.gradient-digital {
+    background: linear-gradient(135deg, #a29bfe 0%, #a29bfedd 100%);
+}
+
+#byled-configurator .product-image.gradient-cable {
+    background: linear-gradient(135deg, #fd79a8 0%, #fd79a8dd 100%);
+}
+
+#byled-configurator .product-image.gradient-controller {
+    background: linear-gradient(135deg, #fdcb6e 0%, #fdcb6edd 100%);
+}
+
+#byled-configurator .product-image.gradient-remote {
+    background: linear-gradient(135deg, #00b894 0%, #00b894dd 100%);
+}
+
+#byled-configurator .product-card {
+    background: white;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 6px;
+    min-height: 220px;
+    width: 100%;
+    overflow: visible;
+}
+
+#byled-configurator .product-card:hover {
+    border-color: #3b82f6;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+    transform: translateY(-2px);
+}
+
+#byled-configurator .product-card.selected {
+    border-color: #3b82f6;
+    border-width: 3px;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+    background: #f0f9ff;
+}
+
+#byled-configurator .product-card.incompatible {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background: #f9fafb;
+    border-color: #d1d5db;
+}
+
+#byled-configurator .product-card.incompatible:hover {
+    transform: none;
+    box-shadow: none;
+    border-color: #d1d5db;
+}
+
+/* Badge info (pré-câblé, etc.) */
+#byled-configurator .product-info-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    background: #d1fae5;
+    color: #065f46;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 600;
+    width: fit-content;
+    margin: 4px auto 0;
+}
+
+#byled-configurator .product-info-badge::before {
+    content: '✓';
+    font-weight: bold;
+}
+
+#byled-configurator .product-image {
+    width: 100%;
+    max-width: 100%;
+    height: 120px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+    transition: transform 0.3s ease;
+    background: transparent;
+    overflow: hidden;
+}
+
+#byled-configurator .product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    max-width: 100%;
+}
+
+#byled-configurator .product-card:hover .product-image {
+    transform: scale(1.08);
+}
+
+#byled-configurator .product-icon {
+    font-size: 48px;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+#byled-configurator .product-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-dark);
+    line-height: 1.3;
+    min-height: 36px;
+    max-height: 36px;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+#byled-configurator .product-details {
+    font-size: 11px;
+    color: #9ca3af;
+    line-height: 1.4;
+    width: 100%;
+    margin-top: -4px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+#byled-configurator .product-reference {
+    font-size: 11px;
+    color: #6b7280;
+    font-weight: 500;
+    width: 100%;
+}
+
+#byled-configurator .product-price {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--primary-blue);
+    margin-top: auto;
+    width: 100%;
+}
+
+/* Badges d'usage (Classic, Musical, Escaliers, etc.) */
+#byled-configurator .product-usage-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 8px;
+    width: 100%;
+    justify-content: center;
+}
+
+#byled-configurator .usage-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 10px;
+    font-weight: 600;
+    background: #3b82f6;
+    color: white;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+
+#byled-configurator .usage-badge.musical {
+    background: #a855f7;
+}
+
+#byled-configurator .usage-badge.escaliers {
+    background: #10b981;
+}
+
+#byled-configurator .product-badge {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    max-width: calc(100% - 16px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#byled-configurator .product-badge.recommended {
+    background: #10b981;
+    color: white;
+    box-shadow: 0 2px 4px rgba(16, 185, 129, 0.3);
+}
+
+#byled-configurator .product-badge.in-stock {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+#byled-configurator .product-reason {
+    font-size: 11px;
+    color: #dc2626;
+    background: #fef2f2;
+    padding: 6px 10px;
+    border-radius: 6px;
+    margin-top: 4px;
+    line-height: 1.4;
+    width: 100%;
+}
+
+
+/* Message d'incompatibilité */
+#byled-configurator .incompatible-reason {
+    font-size: 11px;
+    color: #e74c3c;
+    margin-top: 5px;
+    padding: 5px;
+    background: #fee;
+    border-radius: 4px;
+}
+
+/* Messages vides / informatifs */
+#byled-configurator .empty-message {
+    color: #999;
+    text-align: center;
+    padding: 40px 0;
+}
+
+#byled-configurator .no-results-message {
+    grid-column: 1/-1;
+    text-align: center;
+    padding: 40px;
+    color: #666;
+}
+
+#byled-configurator .error-message {
+    padding: 40px 20px;
+    text-align: center;
+    background: #fee;
+    border-radius: 8px;
+    margin: 20px 0;
+}
+
+#byled-configurator .error-icon {
+    font-size: 32px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+#byled-configurator .error-details {
+    font-size: 14px;
+    color: #666;
+    margin-top: 8px;
+    display: block;
+}
+
+#byled-configurator .retry-button {
+    padding: 8px 16px;
+    background: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 12px;
+}
+
+/* Catégorie de contrôleur */
+#byled-configurator .category-card-content {
+    padding: 10px;
+}
+
+#byled-configurator .category-card-title {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 3px;
+    line-height: 1.3;
+}
+
+#byled-configurator .category-card-description {
+    font-size: 11px;
+    color: #666;
+    margin: 0;
+}
+
+/* Styles inline à déplacer du HTML */
+#byled-configurator .step-title-optional {
+    font-weight: 400;
+    color: #666;
+}
+
+#byled-configurator .cable-length-label {
+    display: block;
+    margin-bottom: 15px;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+#byled-configurator .cable-length-value {
+    color: #667eea;
+    font-weight: 600;
+}
+
+#byled-configurator .length-slider {
+    width: 100%;
+    height: 8px;
+    border-radius: 4px;
+    background: #ddd;
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+#byled-configurator .slider-markers {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+    font-size: 12px;
+    color: #999;
+}
+
+#byled-configurator .section-title {
+    font-size: 18px;
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+#byled-configurator .section-subtitle {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+#byled-configurator .categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+#byled-configurator .show-all-link {
+    display: inline-block;
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+#byled-configurator .length-selector {
+    margin-top: 20px;
+    text-align: center;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Header longueur avec titre et valeur */
+#byled-configurator .length-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+#byled-configurator .length-header .step-title {
+    margin: 0;
+    font-size: 18px;
+}
+
+#byled-configurator .length-value-display {
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--primary-blue);
+}
+
+/* Marqueurs de longueur positionnés */
+#byled-configurator .length-markers .marker-0 { left: 0%; }
+#byled-configurator .length-markers .marker-25 { left: 25%; }
+#byled-configurator .length-markers .marker-50 { left: 50%; }
+#byled-configurator .length-markers .marker-75 { left: 75%; }
+#byled-configurator .length-markers .marker-100 { left: 100%; }
+
+/* Textes du panier */
+#byled-configurator .cart-item-detail {
+    color: #666;
+    font-weight: 400;
+    font-size: 0.9em;
+}
+
+#byled-configurator .cart-item-meta {
+    color: #999;
+    font-weight: 400;
+    font-size: 0.9em;
+}
+
+/* Valeurs de puissance en gras noir */
+#byled-configurator .power-value {
+    color: #000;
+    font-weight: 700;
+}
+
+/* Slider longueur */
+#byled-configurator .length-control {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-width: 100%;
+    margin: 0 0 20px 0;
+}
+
+#byled-configurator .length-markers {
+    position: relative;
+    padding: 0 2px;
+    margin-top: -4px;
+    font-size: 11px;
+    color: #9ca3af;
+    width: 100%;
+    height: 20px;
+}
+
+#byled-configurator .length-markers span {
+    position: absolute;
+    font-weight: 500;
+    transform: translateX(-50%);
+}
+
+#byled-configurator .length-markers span::before {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 6px;
+    background: #d1d5db;
+    margin-bottom: 2px;
+}
+
+#length-input {
+    width: 100%;
+    height: 8px;
+    background: #e5e7eb;
+    border-radius: 5px;
+    outline: none;
+    -webkit-appearance: none;
+    position: relative;
+}
+
+/* Style pour remplir la barre en noir */
+#length-input::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 8px;
+    background: transparent;
+    border-radius: 5px;
+}
+
+#length-input::-moz-range-track {
+    width: 100%;
+    height: 8px;
+    background: #e5e7eb;
+    border-radius: 5px;
+}
+
+#length-input::-moz-range-progress {
+    background: #000000;
+    height: 8px;
+    border-radius: 5px;
+}
+
+#length-input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 24px;
+    height: 24px;
+    background: #000000;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    transition: all 0.2s ease;
+    position: relative;
+    margin-top: -8px;
+}
+
+#length-input::-webkit-slider-thumb:hover {
+    transform: scale(1.1);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
+}
+
+#length-input::-moz-range-thumb {
+    width: 24px;
+    height: 24px;
+    background: #000000;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    transition: all 0.2s ease;
+}
+
+#length-input::-moz-range-thumb:hover {
+    transform: scale(1.1);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
+}
+
+#byled-configurator .length-display {
+    text-align: center;
+    margin-top: 8px;
+}
+
+#length-display {
+    font-size: 1em;
+    font-weight: bold;
+    color: #667eea;
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ========== PANIER (COLONNE DROITE) ========== */
+#byled-configurator .cart-sticky {
+    position: sticky;
+    position: -webkit-sticky;
+    top: 20px;
+    background: rgba(74, 144, 226, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 16px;
+    padding: 18px;
+    box-shadow: 0 4px 20px rgba(74, 144, 226, 0.2);
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
+    z-index: 10;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+#byled-configurator .cart-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#byled-configurator .cart-count {
+    font-size: 11px;
+    font-weight: 500;
+    color: #4a90e2;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 4px 10px;
+    border-radius: 12px;
+    text-transform: none;
+    letter-spacing: normal;
+    white-space: nowrap;
+}
+
+#byled-configurator .cart-items {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 16px;
+    min-height: 150px;
+}
+
+#byled-configurator .cart-item {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 8px;
+    font-size: 12px;
+    gap: 8px;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+#byled-configurator .cart-item:hover {
+    border-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    background: rgba(255, 255, 255, 0.85);
+}
+
+#byled-configurator .cart-item.cart-item-option {
+    background: #f8f9fa;
+    border-style: dashed;
+}
+
+/* Badge catégorie produit */
+#byled-configurator .cart-item-badge {
+    position: absolute;
+    top: -6px;
+    left: 10px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 9px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    z-index: 1;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+#byled-configurator .badge-strip {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+#byled-configurator .badge-supply {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    color: white;
+}
+
+#byled-configurator .badge-cable {
+    background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
+    color: white;
+}
+
+#byled-configurator .badge-controller {
+    background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+    color: white;
+}
+
+#byled-configurator .badge-remote {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+}
+
+#byled-configurator .badge-option {
+    background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+    color: white;
+}
+
+/* Mini image produit dans le panier */
+#byled-configurator .cart-item-image {
+    width: 40px;
+    height: 40px;
+    max-width: 40px;
+    border-radius: 6px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #f8f9fa;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+#byled-configurator .cart-item-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    max-width: 100%;
+}
+
+#byled-configurator .cart-item-image.gradient-rgb {
+    background: linear-gradient(135deg, #74b9ff 0%, #a29bfe 100%);
+}
+
+#byled-configurator .cart-item-image.gradient-digital {
+    background: linear-gradient(135deg, #a29bfe 0%, #74b9ff 100%);
+}
+
+#byled-configurator .cart-item-image.gradient-cable {
+    background: linear-gradient(135deg, #fd79a8 0%, #e84393 100%);
+}
+
+#byled-configurator .cart-item-image.gradient-controller {
+    background: linear-gradient(135deg, #fdcb6e 0%, #e17055 100%);
+}
+
+#byled-configurator .cart-item-image.gradient-remote {
+    background: linear-gradient(135deg, #00b894 0%, #00cec9 100%);
+}
+
+#byled-configurator .cart-item-image.gradient-supply {
+    background: linear-gradient(135deg, #fdcb6e 0%, #f39c12 100%);
+}
+
+#byled-configurator .cart-item-image.gradient-temp {
+    background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%);
+}
+
+#byled-configurator .cart-item-icon {
+    font-size: 26px;
+    filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.1));
+}
+
+/* Informations du produit */
+#byled-configurator .cart-item-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+
+#byled-configurator .cart-item-name {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-dark);
+    line-height: 1.3;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#byled-configurator .cart-item-detail {
+    font-size: 11px;
+    color: #6b7280;
+    line-height: 1.3;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+}
+
+#byled-configurator .cart-item-meta {
+    font-size: 10px;
+    color: #9ca3af;
+    line-height: 1.2;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+}
+
+#byled-configurator .cart-item-price {
+    font-weight: 700;
+    color: var(--primary-blue);
+    white-space: nowrap;
+    font-size: 13px;
+    flex-shrink: 0;
+    margin-left: auto;
+}
+
+#byled-configurator .cart-summary {
+    border-top: 2px solid rgba(255, 255, 255, 0.5);
+    padding-top: 6px;
+    margin-bottom: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 6px 8px;
+    border-radius: 6px;
+    margin-top: 6px;
+}
+
+#byled-configurator .cart-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #020202;
+    padding-top: 3px;
+    padding-bottom: 0;
+    margin-top: 2px;
+    margin-bottom: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+    line-height: 1.2;
+    min-height: auto;
+}
+
+/* Liens vers les pages produits dans le panier */
+#byled-configurator .cart-item-price a {
+    color: #000000;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+#byled-configurator .cart-item-price a:hover {
+    color: #202020;
+    text-decoration-thickness: 2px;
+}
+
+#byled-configurator .btn-primary {
+    width: 100%;
+    padding: 10px 16px;
+    background: white;
+    color: #4a90e2;
+    border: none;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+#byled-configurator .btn-primary:hover {
+    background: var(--primary-blue-dark);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+}
+
+#byled-configurator .btn-primary:active {
+    transform: translateY(0);
+}
+
+#byled-configurator .btn-secondary {
+    width: 100%;
+    padding: 14px 24px;
+    background: var(--bg-white);
+    color: var(--primary-blue);
+    border: 2px solid var(--primary-blue);
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+#byled-configurator .btn-secondary:hover {
+    background: var(--primary-blue);
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+}
+
+#byled-configurator .btn-secondary:active {
+    transform: translateY(0);
+}
+
+/* ========== SLIDER LONGUEUR ========== */
+#byled-configurator .length-control {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 20px;
+    background: var(--bg-light);
+    border-radius: 8px;
+}
+
+#byled-configurator .length-display {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--primary-blue);
+    text-align: center;
+}
+
+/* ========== BOUTONS TEMPÉRATURE ========== */
+#byled-configurator .color-temp-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    width: 100%;
+}
+
+#byled-configurator .color-temp-btn {
+    padding: 14px 16px;
+    background: var(--bg-white);
+    border: 2px solid var(--border-light);
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    text-align: center;
+    width: 100%;
+}
+
+#byled-configurator .color-temp-btn:hover {
+    border-color: var(--primary-blue);
+    background: rgba(0, 102, 255, 0.05);
+}
+
+#byled-configurator .color-temp-btn.selected {
+    background: var(--primary-blue);
+    color: white;
+    border-color: var(--primary-blue);
+}
+
+/* ========== MESSAGES D'AIDE ========== */
+#byled-configurator .step-help {
+    background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+    border-left: 4px solid var(--primary-blue);
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+#byled-configurator .help-icon {
+    font-size: 28px;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+#byled-configurator .help-content {
+    flex: 1;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-dark);
+}
+
+#byled-configurator .help-content strong {
+    color: var(--primary-blue);
+    font-weight: 600;
+}
+
+#byled-configurator .help-content ul {
+    margin: 8px 0 0 0;
+    padding-left: 20px;
+}
+
+#byled-configurator .help-content ul li {
+    margin-bottom: 6px;
+}
+
+/* ========== AVERTISSEMENTS ========== */
+
+/* Recommandation de réalimentation (style info bleu) */
+#byled-configurator .power-feed-info {
+    margin: 20px 0;
+}
+
+#byled-configurator .info-box {
+    background: linear-gradient(135deg, #e3f2fd 0%, #f0f9ff 100%);
+    border-left: 4px solid #0284c7;
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+#byled-configurator .info-icon {
+    font-size: 24px;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+#byled-configurator .info-content {
+    flex: 1;
+}
+
+#byled-configurator .info-content strong {
+    color: #0284c7;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 8px;
+}
+
+#byled-configurator .info-content p {
+    margin: 8px 0;
+    font-size: 14px;
+    color: #334155;
+}
+
+#byled-configurator .power-points {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 12px;
+}
+
+#byled-configurator .power-point {
+    background: #0284c7;
+    color: white;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+/* Note importante (style warning jaune) */
+#byled-configurator .power-feed-warning {
+    background: #fef3c7;
+    border-left: 4px solid #f59e0b;
+    border-radius: 12px;
+    padding: 16px;
+    margin-top: 16px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #78350f;
+}
+
+#byled-configurator .power-feed-warning strong {
+    color: #92400e;
+    font-weight: 700;
+}
+
+#byled-configurator .warning-box {
+    background: #fff3cd;
+    border-left: 4px solid #ff9800;
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+}
+
+#byled-configurator .warning-box.hidden {
+    display: none;
+}
+
+#byled-configurator .warning-icon {
+    font-size: 28px;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+#byled-configurator .warning-content {
+    flex: 1;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #664d03;
+}
+
+#byled-configurator .warning-content strong {
+    color: #ff9800;
+    font-weight: 600;
+    font-size: 15px;
+    display: block;
+    margin-bottom: 8px;
+}
+
+#byled-configurator .warning-content p {
+    margin: 8px 0;
+}
+
+/* ========== SLIDER CABLE ========== */
+#byled-configurator input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    cursor: pointer;
+}
+
+#byled-configurator input[type="range"]::-webkit-slider-track {
+    background: linear-gradient(to right, #ddd 0%, #667eea 100%);
+    height: 8px;
+    border-radius: 4px;
+}
+
+#byled-configurator input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #667eea;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s;
+}
+
+#byled-configurator input[type="range"]::-webkit-slider-thumb:hover {
+    background: #5568d3;
+    transform: scale(1.1);
+}
+
+#byled-configurator input[type="range"]::-moz-range-track {
+    background: linear-gradient(to right, #ddd 0%, #667eea 100%);
+    height: 8px;
+    border-radius: 4px;
+}
+
+#byled-configurator input[type="range"]::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #667eea;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s;
+}
+
+#byled-configurator input[type="range"]::-moz-range-thumb:hover {
+    background: #5568d3;
+    transform: scale(1.1);
+}
+/* ========== CATÉGORIES DE CONTRÔLEURS ========== */
+#byled-configurator .category-card {
+    background: var(--bg-white);
+    border: 2px solid var(--border-light);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+#byled-configurator .category-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: #667eea;
+}
+
+#byled-configurator .category-card.selected {
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+#byled-configurator .category-image {
+    height: 90px;
+    border-radius: 12px 12px 0 0;
+    background-size: cover;
+    background-position: center;
+}
+
+#byled-configurator .category-image.gradient {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+}
+
+/* ========== SYSTÈME DE CONTRÔLE GLOBAL ========== */
+#byled-configurator .control-system-container {
+    background: linear-gradient(135deg, #f8f9ff 0%, #fafbff 100%);
+    border: 2px solid rgba(102, 126, 234, 0.15);
+    border-radius: 16px;
+    padding: 30px;
+    margin-top: 20px;
+    box-shadow: 0 4px 16px rgba(102, 126, 234, 0.08);
+}
+
+#byled-configurator .control-section {
+    background: white;
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 20px;
+}
+
+#byled-configurator .control-section:last-child {
+    margin-bottom: 0;
+}
+
+#byled-configurator .control-section h3 {
+    margin-top: 0;
+}
+
+#byled-configurator .control-section.hidden {
+    display: none;
+}
+
+/* ========== RÉCAPITULATIF RUBAN ========== */
+#byled-configurator .strip-summary-box {
+    background: linear-gradient(135deg, #f5f3ff 0%, #faf8ff 100%);
+    border: 2px solid #e9d5ff;
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 30px;
+}
+
+#byled-configurator .strip-summary-title-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+}
+
+#byled-configurator .strip-summary-icon {
+    font-size: 20px;
+    font-weight: 900;
+    color: #6b21a8;
+    letter-spacing: -2px;
+    line-height: 1;
+    border-radius: 5px;
+    transform: scaleX(0.7);
+    display: inline-block;
+}
+
+#byled-configurator .strip-summary-name {
+    font-size: 18px;
+    font-weight: 700;
+    color: #7c3aed;
+}
+
+#byled-configurator .strip-summary-length {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1f2937;
+}
+
+#byled-configurator .strip-summary-content {
+    background: white;
+    border-radius: 10px;
+    padding: 16px 18px;
+}
+
+#byled-configurator .power-points-label {
+    font-size: 14px;
+    margin-bottom: 12px;
+    color: #4b5563;
+}
+
+#byled-configurator .power-points-count {
+    font-weight: 700;
+    color: #7c3aed;
+    font-size: 16px;
+}
+
+#byled-configurator .power-points-text {
+    font-weight: 600;
+    color: #1f2937;
+}
+
+#byled-configurator .power-points-suffix {
+    font-weight: 400;
+    color: #6b7280;
+}
+
+#byled-configurator .power-points-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+#byled-configurator .power-point-btn {
+    background: #f3e8ff;
+    border: none;
+    color: #7c3aed;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: default;
+    transition: all 0.2s ease;
+}
+
+#byled-configurator .power-point-btn:hover {
+    background: #e9d5ff;
+}
+
+/* ========== SCHÉMA DE CÂBLAGE FINAL ========== */
+#byled-configurator .diagram-title {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 30px;
+}
+
+#byled-configurator .wiring-diagram-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    overflow: visible;
+    padding: 0 20px;
+    max-width: 100%;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+}
+
+#byled-configurator .diagram-item {
+    flex-shrink: 0;
+}
+
+#byled-configurator .diagram-card {
+    background: white;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 16px 20px;
+    text-align: center;
+    width: 140px;
+    min-width: 100px;
+    max-width: 100%;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+
+#byled-configurator .diagram-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+#byled-configurator .diagram-supply {
+    border-color: #fbbf24;
+}
+
+#byled-configurator .diagram-controller {
+    border-color: #60a5fa;
+}
+
+#byled-configurator .diagram-remote {
+    border-color: #a78bfa;
+}
+
+#byled-configurator .diagram-strip-card {
+    border-color: #e9d5ff;
+}
+
+#byled-configurator .diagram-icon {
+    font-size: 32px;
+    margin-bottom: 8px;
+}
+
+#byled-configurator .diagram-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 6px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+    max-width: 100%;
+}
+
+#byled-configurator .diagram-specs {
+    font-size: 11px;
+    color: #6b7280;
+    margin-bottom: 10px;
+    font-family: monospace;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+}
+
+#byled-configurator .diagram-btn {
+    background: #f3f4f6;
+    border: 1px solid #d1d5db;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #374151;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+#byled-configurator .diagram-btn:hover {
+    background: #e5e7eb;
+}
+
+#byled-configurator .diagram-arrow {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+#byled-configurator .arrow-line {
+    width: 30px;
+    height: 8px;
+    background: linear-gradient(to bottom, #ef4444 0%, #ef4444 35%, transparent 35%, transparent 65%, #1f2937 65%, #1f2937 100%);
+}
+
+#byled-configurator .arrow-head {
+    font-size: 20px;
+    color: #fbbf24;
+    font-weight: bold;
+}
+
+/* Ondes sans fil pour télécommande */
+#byled-configurator .diagram-wireless {
+    gap: 0;
+}
+
+#byled-configurator .wireless-waves {
+    display: flex;
+    gap: -2px;
+    align-items: center;
+}
+
+#byled-configurator .wireless-waves .wave {
+    font-size: 16px;
+    color: #8b5cf6;
+    opacity: 0.7;
+    font-weight: bold;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+#byled-configurator .wireless-waves .wave:nth-child(1) {
+    animation-delay: 0.4s;
+}
+
+#byled-configurator .wireless-waves .wave:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+#byled-configurator .wireless-waves .wave:nth-child(3) {
+    animation-delay: 0s;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+}
+
+#byled-configurator .diagram-arrow-vertical {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px 0;
+}
+
+#byled-configurator .arrow-line-vertical {
+    width: 3px;
+    height: 40px;
+    background: #fbbf24;
+}
+
+/* Câblage 3 fils (contrôleur -> ruban) */
+#byled-configurator .arrow-line-vertical.wires-3 {
+    width: 18px;
+    background: linear-gradient(to right, 
+        #ef4444 0%, #ef4444 23%, 
+        transparent 23%, transparent 38%,
+        #22c55e 38%, #22c55e 61%,
+        transparent 61%, transparent 76%,
+        #1f2937 76%, #1f2937 100%);
+}
+
+/* Câblage 4 fils (contrôleur -> ruban) */
+#byled-configurator .arrow-line-vertical.wires-4 {
+    width: 24px;
+    background: linear-gradient(to right, 
+        #ef4444 0%, #ef4444 16%, 
+        transparent 16%, transparent 27%,
+        #22c55e 27%, #22c55e 43%,
+        transparent 43%, transparent 54%,
+        #3b82f6 54%, #3b82f6 70%,
+        transparent 70%, transparent 81%,
+        #1f2937 81%, #1f2937 100%);
+}
+
+#byled-configurator .arrow-head-vertical {
+    font-size: 20px;
+    color: #fbbf24;
+    font-weight: bold;
+}
+
+#byled-configurator .diagram-strip {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    min-width: fit-content;
+    overflow: visible;
+}
+
+/* Connexions d'alimentation à gauche du ruban */
+#byled-configurator .strip-power-connections {
+    position: absolute;
+    left: -10px;
+    top: 50%;
+    transform: translate(-100%, -50%);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-end;
+}
+
+#byled-configurator .power-connection {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#byled-configurator .power-connection-label {
+    background: #fef3c7;
+    border: 2px solid #f59e0b;
+    border-radius: 6px;
+    padding: 4px 8px;
+    font-size: 10px;
+    color: #92400e;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    white-space: nowrap;
+    max-width: 200px;
+}
+
+#byled-configurator .power-connection-label strong {
+    color: #b45309;
+}
+
+#byled-configurator .power-connection-wires {
+    display: flex;
+    align-items: center;
+}
+
+#byled-configurator .power-connection-wire-pair {
+    width: 30px;
+    height: 8px;
+    background: linear-gradient(to bottom, #ef4444 0%, #ef4444 35%, transparent 35%, transparent 65%, #1f2937 65%, #1f2937 100%);
+    position: relative;
+}
+
+#byled-configurator .power-connection-wire-pair::after {
+    content: '←';
+    position: absolute;
+    left: -15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #f59e0b;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+#byled-configurator .diagram-strip-card {
+    width: 180px;
+    max-width: 100%;
+    margin: 0 auto;
+    position: relative;
+}
+
+/* ========== MODES DE CONTRÔLE (CHECKBOXES) ========== */
+#control-modes {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    max-width: 100%;
+    width: 100%;
+}
+
+#byled-configurator .control-mode-option {
+    position: relative;
+}
+
+#byled-configurator .control-mode-checkbox {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: #667eea;
+    flex-shrink: 0;
+    margin: 0;
+}
+
+#byled-configurator .control-mode-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: var(--bg-white);
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+#byled-configurator .control-mode-label:hover {
+    border-color: #c7d2fe;
+    background: #f9fafb;
+}
+
+#byled-configurator .control-mode-checkbox:checked ~ .control-mode-text {
+    color: #4f46e5;
+}
+
+#byled-configurator .control-mode-label:has(.control-mode-checkbox:checked) {
+    border-color: #667eea;
+    background: #f8f9ff;
+}
+
+#byled-configurator .control-mode-icon {
+    font-size: 18px;
+    min-width: 20px;
+    text-align: center;
+}
+
+#byled-configurator .control-mode-text {
+    font-weight: 500;
+    color: #1f2937;
+    font-size: 13px;
+    flex: 1;
+}
+
+/* ========== MODAL DE CONFIRMATION ========== */
+#byled-configurator .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    padding: 20px;
+    animation: fadeIn 0.2s ease;
+}
+
+#byled-configurator .modal-overlay.hidden {
+    display: none;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+#byled-configurator .modal-content {
+    background: white;
+    border-radius: 20px;
+    padding: 32px;
+    max-width: 480px;
+    width: 100%;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: slideUp 0.3s ease;
+}
+
+#byled-configurator .modal-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+#byled-configurator .modal-icon {
+    font-size: 48px;
+    line-height: 1;
+}
+
+#byled-configurator .modal-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin: 0;
+}
+
+#byled-configurator .modal-message {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #6b7280;
+    margin: 0 0 32px 0;
+}
+
+#byled-configurator .modal-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+}
+
+#byled-configurator .modal-btn {
+    padding: 12px 24px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+    outline: none;
+}
+
+#byled-configurator .modal-btn-cancel {
+    background: #f3f4f6;
+    color: #6b7280;
+}
+
+#byled-configurator .modal-btn-cancel:hover {
+    background: #e5e7eb;
+    transform: translateY(-1px);
+}
+
+#byled-configurator .modal-btn-confirm {
+    background: var(--primary-blue);
+    color: white;
+}
+
+#byled-configurator .modal-btn-confirm:hover {
+    background: var(--primary-blue-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 102, 255, 0.3);
+}
+
+#byled-configurator .modal-btn:active {
+    transform: translateY(0);
+}
+/* ========== RÉCAPITULATIF DE LA CONFIGURATION ========== */
+#byled-configurator .config-summary-section {
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    border-radius: 16px;
+    padding: 32px 36px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#byled-configurator .config-summary-title {
+    color: #f1f5f9;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 24px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+#byled-configurator .config-summary-content {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    max-width: 100%;
+}
+
+#byled-configurator .config-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 0;
+    max-width: 100%;
+    gap: 10px;
+}
+
+#byled-configurator .config-row-indent {
+    padding-left: 24px;
+}
+
+#byled-configurator .config-label {
+    color: #cbd5e1;
+    font-size: 15px;
+    font-weight: 400;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    flex: 1;
+}
+
+#byled-configurator .config-value {
+    color: #f1f5f9;
+    font-size: 15px;
+    font-weight: 600;
+    text-align: right;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    flex-shrink: 0;
+}
+
+#byled-configurator .config-value-link {
+    color: #60a5fa;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.2s ease;
+}
+
+#byled-configurator .config-value-link:hover {
+    color: #93c5fd;
+}
+
+#byled-configurator .config-value-link::after {
+    content: '↗';
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+/* ========================================================================== */
+/* ========================= RESPONSIVE DESIGN ============================== */
+/* ========================================================================== */
+
+/* ========== TABLETTE (1024px et moins) ========== */
+@media (max-width: 1024px) {
+    #byled-configurator {
+        padding-top: 100px;
+    }
+
+    /* Header */
+    #byled-configurator .header-content {
+        padding: 0 16px;
+        gap: 12px;
+    }
+
+    #byled-configurator .logo {
+        font-size: 20px;
+    }
+
+    /* Stepper */
+    #byled-configurator .stepper {
+        max-width: 100%;
+        padding: 0 8px;
+    }
+
+    #byled-configurator .stepper-circle {
+        width: 28px;
+        height: 28px;
+        font-size: 12px;
+    }
+
+    #byled-configurator .stepper-label {
+        font-size: 10px;
+    }
+
+    #byled-configurator .stepper-line {
+        margin: 0 6px;
+        margin-top: 14px;
+    }
+
+    /* Layout */
+    #byled-configurator .main-layout {
+        flex-direction: column;
+        gap: 20px;
+        padding: 24px 16px;
+    }
+
+    /* Panier mobile (tiroir) */
+    #byled-configurator .cart-column {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        z-index: 1000;
+        transform: translateY(calc(100% - 60px));
+        transition: transform 0.3s ease;
+    }
+    
+    #byled-configurator .cart-column.open {
+        transform: translateY(0);
+    }
+
+    #byled-configurator .cart-sticky {
+        position: relative;
+        top: 0;
+        max-height: 70vh;
+        border-radius: 16px 16px 0 0;
+        box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
+    }
+    
+    #byled-configurator .cart-sticky::before {
+        content: '';
+        position: absolute;
+        top: 8px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 40px;
+        height: 4px;
+        background: #cbd5e1;
+        border-radius: 2px;
+        cursor: pointer;
+    }
+
+    #byled-configurator .configurator-column {
+        padding-bottom: 80px;
+    }
+
+    /* Steps */
+    #byled-configurator .step {
+        padding: 16px;
+        border-radius: 12px;
+    }
+
+    #byled-configurator .step-title {
+        font-size: 18px;
+        margin-bottom: 16px;
+    }
+
+    /* Grilles - 2 colonnes sur tablette */
+    #byled-configurator .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    #byled-configurator .supplies-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    #byled-configurator .color-temp-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    /* Section alimentation */
+    #byled-configurator .supply-section-wrapper {
+        padding: 18px;
+    }
+
+    /* Cartes produits */
+    #byled-configurator .product-card {
+        padding: 12px;
+        min-height: 260px;
+    }
+
+    #byled-configurator .supply-card {
+        padding: 10px;
+        min-height: 280px;
+    }
+}
+
+/* ========== MOBILE (768px et moins) ========== */
+@media (max-width: 768px) {
+    /* FORCER tout à rester dans l'écran */
+    #byled-configurator * {
+        max-width: 100vw;
+    }
+
+    #byled-configurator {
+        padding-top: 140px;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    /* Header */
+    #byled-configurator .header {
+        padding: 12px 0;
+        width: 100%;
+    }
+
+    #byled-configurator .header-content {
+        padding: 0 12px;
+        gap: 12px;
+        width: 100%;
+    }
+
+    #byled-configurator .logo {
+        font-size: 18px;
+    }
+
+    /* Stepper scrollable */
+    #byled-configurator .stepper {
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 0 12px;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+
+    #byled-configurator .stepper::-webkit-scrollbar {
+        display: none;
+    }
+
+    #byled-configurator .stepper-circle {
+        width: 32px;
+        height: 32px;
+        font-size: 13px;
+    }
+
+    #byled-configurator .stepper-label {
+        font-size: 10px;
+        max-width: 60px;
+        text-align: center;
+        line-height: 1.2;
+    }
+
+    #byled-configurator .stepper-line {
+        margin: 0 6px;
+        margin-top: 16px;
+        min-width: 20px;
+    }
+
+    /* Layout */
+    #byled-configurator .main-layout {
+        padding: 16px 12px;
+        gap: 16px;
+        width: 100%;
+    }
+
+    /* Steps - forcer à rester dans l'écran */
+    #byled-configurator .step {
+        padding: 14px;
+        border-radius: 12px;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    #byled-configurator .step-title {
+        font-size: 16px;
+        margin-bottom: 12px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+
+    #byled-configurator .step-header {
+        gap: 8px;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    /* Tooltips */
+    #byled-configurator .tooltip-icon {
+        width: 20px;
+        height: 20px;
+        font-size: 14px;
+    }
+
+    #byled-configurator .tooltip-icon::after {
+        width: 260px;
+        font-size: 11px;
+        padding: 10px 12px;
+        max-width: calc(100vw - 40px);
+        left: auto;
+        right: -10px;
+        transform: none;
+    }
+
+    #byled-configurator .tooltip-icon::before {
+        left: auto;
+        right: 8px;
+        transform: none;
+    }
+
+    #byled-configurator .tooltip-icon:hover::after {
+        transform: translateY(-4px);
+    }
+
+    /* Grilles - 1 colonne sur mobile - FORCER largeur 100% */
+    #byled-configurator .products-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    #byled-configurator .supplies-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    #byled-configurator .color-temp-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    #control-modes {
+        grid-template-columns: 1fr;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    #byled-configurator .color-temp-btn {
+        padding: 12px 14px;
+        font-size: 12px;
+        width: 100%;
+    }
+
+    /* Section alimentation - FORCER largeur */
+    #byled-configurator .supply-section-wrapper {
+        padding: 14px;
+        border-radius: 10px;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    #byled-configurator .supply-header {
+        gap: 8px;
+        margin-bottom: 12px;
+    }
+
+    #byled-configurator .supply-header-title {
+        font-size: 18px;
+    }
+
+    #byled-configurator .supply-header-icon {
+        font-size: 26px;
+    }
+
+    #byled-configurator .supply-power-info,
+    #byled-configurator .supply-recommendation {
+        font-size: 13px;
+        margin-bottom: 10px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        width: 100%;
+    }
+
+    /* Cartes - FORCER largeur */
+    #byled-configurator .supply-card {
+        min-height: 260px;
+        padding: 10px;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    #byled-configurator .product-card {
+        min-height: 250px;
+        padding: 12px;
+        gap: 8px;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    #byled-configurator .product-image {
+        height: 100px;
+        max-width: 100%;
+        overflow: hidden;
+    }
+
+    #byled-configurator .product-image img {
+        width: 100%;
+        height: 100%;
+        max-width: 100%;
+        object-fit: contain;
+    }
+
+    #byled-configurator .supply-image {
+        max-width: 100%;
+    }
+
+    #byled-configurator .supply-image img {
+        max-width: 100%;
+        height: auto;
+        object-fit: contain;
+    }
+
+    #byled-configurator .product-name {
+        font-size: 13px;
+        max-width: 100%;
+    }
+
+    #byled-configurator .product-details {
+        font-size: 11px;
+        max-width: 100%;
+    }
+
+    #byled-configurator .product-price {
+        font-size: 15px;
+    }
+
+    /* Info boxes et avertissements - FORCER largeur */
+    #byled-configurator .info-box {
+        padding: 12px;
+        gap: 10px;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    #byled-configurator .info-icon {
+        font-size: 20px;
+    }
+
+    #byled-configurator .info-content {
+        font-size: 13px;
+    }
+
+    #byled-configurator .info-content p {
+        font-size: 12px;
+    }
+
+    #byled-configurator .power-feed-warning {
+        padding: 12px;
+        font-size: 12px;
+    }
+
+    #byled-configurator .warning-box {
+        padding: 12px;
+        gap: 10px;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    #byled-configurator .warning-icon {
+        font-size: 22px;
+    }
+
+    #byled-configurator .step-help {
+        padding: 12px;
+        gap: 10px;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    #byled-configurator .help-icon {
+        font-size: 22px;
+    }
+
+    #byled-configurator .help-content {
+        font-size: 12px;
+        max-width: 100%;
+    }
+
+    /* Power points */
+    #byled-configurator .power-points {
+        gap: 6px;
+        max-width: 100%;
+        flex-wrap: wrap;
+    }
+
+    #byled-configurator .power-point {
+        padding: 5px 12px;
+        font-size: 11px;
+    }
+
+    /* Longueur */
+    #byled-configurator .length-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        margin-bottom: 16px;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    #byled-configurator .length-value-display {
+        font-size: 28px;
+    }
+
+    #length-input {
+        height: 6px;
+    }
+
+    #length-input::-webkit-slider-thumb {
+        width: 20px;
+        height: 20px;
+        margin-top: -7px;
+    }
+
+    #length-input::-moz-range-thumb {
+        width: 20px;
+        height: 20px;
+    }
+
+    #byled-configurator .length-markers {
+        font-size: 10px;
+    }
+
+    /* Diagramme - FORCER largeur */
+    #byled-configurator .diagram-container {
+        padding: 12px;
+        width: 100%;
+        max-width: 100%;
+        overflow-x: auto;
+        box-sizing: border-box;
+    }
+
+    #byled-configurator .diagram-card {
+        padding: 8px;
+        min-width: 80px;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    #byled-configurator .diagram-strip-card {
+        width: 140px;
+        max-width: 100%;
+    }
+
+    #byled-configurator .diagram-label {
+        font-size: 10px;
+        margin-bottom: 6px;
+    }
+
+    #byled-configurator .diagram-icon {
+        font-size: 28px;
+    }
+
+    #byled-configurator .diagram-name {
+        font-size: 11px;
+        word-wrap: break-word;
+        max-width: 100%;
+    }
+
+    #byled-configurator .diagram-ref {
+        font-size: 9px;
+        word-wrap: break-word;
+        max-width: 100%;
+    }
+
+    #byled-configurator .wire-horizontal,
+    #byled-configurator .wire-vertical {
+        min-width: 25px;
+        min-height: 25px;
+    }
+
+    /* Panier */
+    #byled-configurator .cart-sticky {
+        max-height: 75vh;
+        padding: 16px 12px;
+    }
+
+    #byled-configurator .cart-title {
+        font-size: 14px;
+        margin-bottom: 12px;
+        padding-bottom: 10px;
+    }
+
+    #byled-configurator .cart-count {
+        font-size: 10px;
+        padding: 3px 8px;
+    }
+
+    #byled-configurator .cart-item {
+        padding: 10px;
+        margin-bottom: 8px;
+    }
+
+    #byled-configurator .cart-item-name {
+        font-size: 13px;
+    }
+
+    #byled-configurator .cart-item-detail,
+    #byled-configurator .cart-item-meta {
+        font-size: 11px;
+    }
+
+    #byled-configurator .cart-item-price {
+        font-size: 14px;
+    }
+
+    #byled-configurator .cart-total {
+        font-size: 13px;
+        padding: 3px 0 0 0;
+        margin-top: 2px;
+        margin-bottom: 0;
+    }
+
+    /* Récapitulatif config - FORCER largeur */
+    #byled-configurator .config-summary-section {
+        padding: 16px 12px;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    #byled-configurator .config-summary-title,
+    #byled-configurator .summary-title {
+        font-size: 18px;
+        margin-bottom: 14px;
+    }
+
+    #byled-configurator .summary-grid {
+        gap: 10px;
+        width: 100%;
+    }
+
+    #byled-configurator .summary-item {
+        padding: 10px;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    #byled-configurator .summary-label {
+        font-size: 11px;
+    }
+
+    #byled-configurator .summary-value {
+        font-size: 13px;
+        word-wrap: break-word;
+    }
+
+    /* Système de contrôle - FORCER largeur */
+    #byled-configurator .control-system-container {
+        padding: 16px;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    #byled-configurator .control-section {
+        padding: 14px;
+        margin-bottom: 14px;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    #byled-configurator .control-section h3 {
+        font-size: 15px;
+        margin-bottom: 10px;
+    }
+
+    #byled-configurator .category-grid {
+        gap: 10px;
+    }
+
+    #byled-configurator .category-card {
+        padding: 12px;
+    }
+}
+
+/* ========== PETIT MOBILE (480px et moins) ========== */
+@media (max-width: 480px) {
+    /* FORCER tout à 100% max */
+    #byled-configurator * {
+        max-width: 100vw;
+    }
+
+    #byled-configurator {
+        padding-top: 130px;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    /* Header */
+    #byled-configurator .logo {
+        font-size: 16px;
+    }
+
+    /* Stepper */
+    #byled-configurator .stepper-circle {
+        width: 28px;
+        height: 28px;
+        font-size: 12px;
+    }
+
+    #byled-configurator .stepper-label {
+        font-size: 9px;
+        max-width: 50px;
+    }
+
+    #byled-configurator .stepper-line {
+        margin: 0 4px;
+        margin-top: 14px;
+        min-width: 15px;
+    }
+
+    /* Layout */
+    #byled-configurator .main-layout {
+        padding: 12px 8px;
+        width: 100%;
+    }
+
+    /* Steps */
+    #byled-configurator .step {
+        padding: 12px;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    #byled-configurator .step-title {
+        font-size: 15px;
+    }
+
+    /* Grilles - toutes en 1 colonne - FORCER largeur */
+    #byled-configurator .products-grid,
+    #byled-configurator .supplies-grid,
+    #byled-configurator .color-temp-grid,
+    #control-modes {
+        gap: 10px;
+        grid-template-columns: 1fr;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    /* Section alimentation */
+    #byled-configurator .supply-section-wrapper {
+        padding: 12px;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    #byled-configurator .supply-header {
+        gap: 6px;
+        margin-bottom: 10px;
+    }
+
+    #byled-configurator .supply-header-title {
+        font-size: 16px;
+    }
+
+    #byled-configurator .supply-header-icon {
+        font-size: 22px;
+    }
+
+    #byled-configurator .supply-power-info,
+    #byled-configurator .supply-recommendation {
+        font-size: 12px;
+        margin-bottom: 8px;
+    }
+
+    /* Cartes */
+    #byled-configurator .product-card,
+    #byled-configurator .supply-card {
+        padding: 10px;
+        min-height: 240px;
+        max-width: 100%;
+    }
+
+    #byled-configurator .product-image {
+        height: 90px;
+        max-width: 100%;
+        overflow: hidden;
+    }
+
+    #byled-configurator .product-image img {
+        width: 100%;
+        height: 100%;
+        max-width: 100%;
+        object-fit: contain;
+    }
+
+    #byled-configurator .supply-image {
+        max-width: 100%;
+    }
+
+    #byled-configurator .supply-image img {
+        max-width: 100%;
+        height: auto;
+        object-fit: contain;
+    }
+
+    /* Boutons température */
+    #byled-configurator .color-temp-btn {
+        padding: 10px 12px;
+        font-size: 11px;
+    }
+
+    /* Info boxes et warnings */
+    #byled-configurator .info-box {
+        padding: 10px;
+        gap: 8px;
+        flex-direction: column;
+    }
+
+    #byled-configurator .info-icon {
+        font-size: 18px;
+    }
+
+    #byled-configurator .info-content {
+        font-size: 12px;
+    }
+
+    #byled-configurator .info-content p {
+        font-size: 11px;
+    }
+
+    #byled-configurator .power-feed-warning {
+        padding: 10px;
+        font-size: 11px;
+    }
+
+    #byled-configurator .warning-box {
+        padding: 10px;
+        gap: 8px;
+        flex-direction: column;
+    }
+
+    #byled-configurator .warning-icon {
+        font-size: 20px;
+    }
+
+    #byled-configurator .step-help {
+        padding: 10px;
+        gap: 8px;
+    }
+
+    #byled-configurator .help-icon {
+        font-size: 20px;
+    }
+
+    #byled-configurator .help-content {
+        font-size: 11px;
+    }
+
+    /* Power points */
+    #byled-configurator .power-points {
+        gap: 4px;
+    }
+
+    #byled-configurator .power-point {
+        padding: 4px 10px;
+        font-size: 10px;
+    }
+
+    /* Tooltips */
+    #byled-configurator .tooltip-icon::after {
+        width: 220px;
+        font-size: 10px;
+        padding: 8px 10px;
+        max-width: calc(100vw - 30px);
+    }
+
+    /* Longueur */
+    #byled-configurator .length-value-display {
+        font-size: 24px;
+    }
+
+    /* Diagramme */
+    #byled-configurator .wiring-diagram-container {
+        padding: 0 10px;
+        gap: 10px;
+        max-width: 100%;
+        overflow-x: auto;
+    }
+
+    #byled-configurator .diagram-card {
+        min-width: 80px;
+        max-width: 100%;
+        padding: 6px;
+        box-sizing: border-box;
+    }
+
+    #byled-configurator .diagram-icon {
+        font-size: 24px;
+    }
+
+    #byled-configurator .diagram-label {
+        font-size: 10px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        white-space: normal;
+    }
+
+    #byled-configurator .diagram-specs {
+        font-size: 9px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        white-space: normal;
+    }
+
+    #byled-configurator .diagram-name {
+        font-size: 10px;
+    }
+
+    #byled-configurator .wire-horizontal,
+    #byled-configurator .wire-vertical {
+        min-width: 25px;
+        min-height: 25px;
+    }
+
+    /* Panier */
+    #byled-configurator .cart-sticky {
+        padding: 14px 10px;
+    }
+
+    #byled-configurator .cart-title {
+        font-size: 13px;
+    }
+
+    /* Récapitulatif */
+    #byled-configurator .config-summary-section {
+        padding: 14px 10px;
+    }
+
+    #byled-configurator .config-summary-title,
+    #byled-configurator .summary-title {
+        font-size: 16px;
+    }
+}
+
+/* ========== MOBILE PORTRAIT - Très étroit (390px et moins) ========== */
+@media (max-width: 390px) {
+    /* Réduire encore les paddings */
+    #byled-configurator {
+        padding-top: 120px;
+    }
+
+    #byled-configurator .header-content {
+        padding: 0 8px;
+        gap: 8px;
+    }
+
+    #byled-configurator .main-layout {
+        padding: 12px 6px;
+    }
+
+    #byled-configurator .step {
+        padding: 10px;
+    }
+
+    /* Grilles avec moins d'espace */
+    #byled-configurator .products-grid,
+    #byled-configurator .supplies-grid,
+    #byled-configurator .color-temp-grid,
+    #control-modes {
+        gap: 8px;
+    }
+
+    /* Cartes plus compactes */
+    #byled-configurator .product-card,
+    #byled-configurator .supply-card {
+        padding: 8px;
+        min-height: 220px;
+    }
+
+    /* Section alimentation */
+    #byled-configurator .supply-section-wrapper {
+        padding: 10px;
+    }
+
+    #byled-configurator .supply-header {
+        gap: 6px;
+        margin-bottom: 8px;
+    }
+
+    #byled-configurator .supply-header-title {
+        font-size: 15px;
+    }
+
+    #byled-configurator .supply-header-icon {
+        font-size: 20px;
+    }
+
+    #byled-configurator .supply-power-info,
+    #byled-configurator .supply-recommendation {
+        font-size: 11px;
+        margin-bottom: 6px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        width: 100%;
+    }
+
+    /* Boutons */
+    #byled-configurator .color-temp-btn {
+        padding: 10px;
+        font-size: 11px;
+    }
+
+    #byled-configurator .product-select-btn,
+    #byled-configurator .supply-select-btn {
+        padding: 8px 12px;
+        font-size: 11px;
+    }
+
+    /* Info boxes */
+    #byled-configurator .info-box,
+    #byled-configurator .warning-box,
+    #byled-configurator .step-help {
+        padding: 8px;
+        gap: 6px;
+    }
+
+    #byled-configurator .info-content,
+    #byled-configurator .help-content {
+        font-size: 11px;
+    }
+
+    #byled-configurator .info-content p {
+        font-size: 10px;
+    }
+
+    /* Tooltips encore plus petits */
+    #byled-configurator .tooltip-icon::after {
+        width: 200px;
+        font-size: 9px;
+        padding: 6px 8px;
+        max-width: calc(100vw - 20px);
+    }
+
+    /* Stepper très compact */
+    #byled-configurator .stepper {
+        padding: 0 8px;
+    }
+
+    #byled-configurator .stepper-circle {
+        width: 26px;
+        height: 26px;
+        font-size: 11px;
+    }
+
+    #byled-configurator .stepper-label {
+        font-size: 8px;
+        max-width: 45px;
+    }
+
+    #byled-configurator .stepper-line {
+        margin: 0 3px;
+        margin-top: 13px;
+        min-width: 12px;
+    }
+
+    /* Diagramme */
+    #byled-configurator .diagram-container {
+        padding: 8px;
+        max-width: 100%;
+        overflow-x: auto;
+    }
+
+    #byled-configurator .wiring-diagram-container {
+        padding: 0 6px;
+        gap: 6px;
+        max-width: 100%;
+        overflow-x: auto;
+    }
+
+    #byled-configurator .diagram-card {
+        min-width: 70px;
+        max-width: 100%;
+        padding: 4px;
+        box-sizing: border-box;
+    }
+
+    #byled-configurator .diagram-strip-card {
+        width: 120px;
+        max-width: 100%;
+    }
+
+    #byled-configurator .diagram-icon {
+        font-size: 22px;
+    }
+
+    #byled-configurator .diagram-label {
+        font-size: 9px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        white-space: normal;
+        line-height: 1.2;
+    }
+
+    #byled-configurator .diagram-specs {
+        font-size: 8px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        white-space: normal;
+        line-height: 1.2;
+    }
+
+    #byled-configurator .diagram-name {
+        font-size: 9px;
+    }
+
+    #byled-configurator .diagram-ref {
+        font-size: 8px;
+    }
+
+    #byled-configurator .wire-horizontal,
+    #byled-configurator .wire-vertical {
+        min-width: 20px;
+        min-height: 20px;
+    }
+
+    /* Power points */
+    #byled-configurator .power-points {
+        gap: 3px;
+    }
+
+    #byled-configurator .power-point {
+        padding: 3px 8px;
+        font-size: 9px;
+    }
+
+    /* Longueur */
+    #byled-configurator .length-value-display {
+        font-size: 22px;
+    }
+
+    #byled-configurator .length-markers {
+        font-size: 9px;
+    }
+
+    /* Système de contrôle */
+    #byled-configurator .control-system-container {
+        padding: 12px;
+    }
+
+    #byled-configurator .control-section {
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+
+    #byled-configurator .control-section h3 {
+        font-size: 14px;
+    }
+
+    #byled-configurator .category-card {
+        padding: 10px;
+    }
+
+    /* Panier */
+    #byled-configurator .cart-sticky {
+        padding: 12px 8px;
+    }
+
+    #byled-configurator .cart-title {
+        font-size: 12px;
+        padding-bottom: 8px;
+        margin-bottom: 10px;
+    }
+
+    #byled-configurator .cart-item {
+        padding: 8px;
+        margin-bottom: 6px;
+    }
+
+    #byled-configurator .cart-item-name {
+        font-size: 12px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+
+    #byled-configurator .cart-item-detail,
+    #byled-configurator .cart-item-meta {
+        font-size: 10px;
+    }
+
+    #byled-configurator .cart-total {
+        font-size: 13px;
+        padding: 3px 0 0 0;
+    }
+
+    /* Récap config */
+    #byled-configurator .config-summary-section {
+        padding: 12px 8px;
+    }
+
+    #byled-configurator .config-summary-title,
+    #byled-configurator .summary-title {
+        font-size: 15px;
+    }
+
+    #byled-configurator .config-row {
+        padding: 3px 0;
+    }
+
+    #byled-configurator .config-label,
+    #byled-configurator .config-value {
+        font-size: 13px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+
+    #byled-configurator .summary-item {
+        padding: 8px;
+    }
+
+    #byled-configurator .summary-label {
+        font-size: 10px;
+    }
+
+    #byled-configurator .summary-value {
+        font-size: 12px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+}

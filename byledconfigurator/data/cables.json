@@ -1,0 +1,62 @@
+[
+    {
+        "id": 1,
+        "name": "Câble plat pour ruban LED mono 2x0.75mm²",
+        "image_url": "/public/images/products/Cable_mono_0.75.png",
+        "reference": "CABLE-MONO-0.75",
+        "wire_count": 2,
+        "section": 0.75,
+        "usage": "power",
+        "price_per_meter": 1.99
+    },
+    {
+        "id": 2,
+        "name": "Câble gainé noir pour ruban LED mono 2x0.50mm²",
+        "image_url": "/public/images/products/Cable_noir_0.5.png",
+        "reference": "CABLE-GAINE-NOIR-0.5",
+        "wire_count": 2,
+        "section": 0.5,
+        "usage": "power",
+        "price_per_meter": 1.99
+    },
+    {
+        "id": 3,
+        "name": "Câble gainé blanc pour ruban LED mono 2x0.50mm²",
+        "image_url": "/public/images/products/Cable_blanc_0.5.png",
+        "reference": "CABLE-GAINE-BLANC-0.5",
+        "wire_count": 2,
+        "section": 0.5,
+        "usage": "power",
+        "price_per_meter": 1.99
+    },
+    {
+        "id": 4,
+        "name": "Câble plat pour ruban LED RGB 4x0.52mm²",
+        "image_url": "/public/images/products/Cable_flat_4x0.52.png",
+        "reference": "CABLE-RGB",
+        "wire_count": 4,
+        "section": 0.52,
+        "usage": "extension",
+        "price_per_meter": 1.99
+    },
+    {
+        "id": 5,
+        "name": "Câble gainé noir pour ruban LED RGB 4x0.50mm²",
+        "image_url": "/public/images/products/Cable_4x0.5.png",
+        "reference": "CABLE-G-RGB",
+        "wire_count": 4,
+        "section": 0.5,
+        "usage": "extension",
+        "price_per_meter": 3.19
+    },
+    {
+        "id": 6,
+        "name": "Câble plat pour ruban LED CCT / DIGITAL 3x0.50mm²",
+        "image_url": "/public/images/products/Cable_plat.png",
+        "reference": "CABLE-BI",
+        "wire_count": 3,
+        "section": 0.5,
+        "usage": "extension",
+        "price_per_meter": 1.99
+    }
+]

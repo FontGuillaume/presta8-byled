@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: presta8_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: prestashop
+      MYSQL_USER: prestashop
+      MYSQL_PASSWORD: prestashop
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - prestashop_network
+
+  prestashop:
+    image: prestashop/prestashop:8.1
+    container_name: presta8_web
+    depends_on:
+      - mysql
+    ports:
+      - "8080:80"
+    environment:
+      DB_SERVER: mysql
+      DB_NAME: prestashop
+      DB_USER: prestashop
+      DB_PASSWD: prestashop
+      PS_INSTALL_AUTO: 1
+      PS_DOMAIN: localhost:8080
+      PS_FOLDER_INSTALL: install
+      PS_FOLDER_ADMIN: admin
+      PS_LANGUAGE: fr
+      PS_COUNTRY: FR
+      PS_ENABLE_SSL: 0
+      ADMIN_MAIL: admin@prestashop.com
+      ADMIN_PASSWD: admin123
+    volumes:
+      - prestashop_data:/var/www/html
+      # Monter votre module pour le développement
+      - ./byledconfigurator:/var/www/html/modules/byledconfigurator
+    networks:
+      - prestashop_network
+
+volumes:
+  mysql_data:
+  prestashop_data:
+
+networks:
+  prestashop_network:
+    driver: bridge

@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configurateur LED ByLED</title>
+    <link rel="stylesheet" href="css/style.css?v=css-clean">
+</head>
+
+<body>
+    <!-- Wrapper principal pour isolation CSS -->
+    <div id="byled-configurator">
+    <!-- Header avec stepper intégré -->
+    <header class="header">
+        <div class="header-content">
+            <h1 class="logo">ByLED Configurateur</h1>
+            
+            <!-- Stepper de progression -->
+            <div class="stepper">
+                <div class="stepper-step active" data-step="1">
+                    <div class="stepper-circle">1</div>
+                    <div class="stepper-label">Ruban LED</div>
+                </div>
+                <div class="stepper-line"></div>
+                <div class="stepper-step" data-step="2">
+                    <div class="stepper-circle">2</div>
+                    <div class="stepper-label">Température</div>
+                </div>
+                <div class="stepper-line"></div>
+                <div class="stepper-step" data-step="3">
+                    <div class="stepper-circle">3</div>
+                    <div class="stepper-label">Longueur</div>
+                </div>
+                <div class="stepper-line"></div>
+                <div class="stepper-step" data-step="4">
+                    <div class="stepper-circle">4</div>
+                    <div class="stepper-label">Alimentation</div>
+                </div>
+                <div class="stepper-line"></div>
+                <div class="stepper-step" data-step="5">
+                    <div class="stepper-circle">5</div>
+                    <div class="stepper-label">Câbles</div>
+                </div>
+                <div class="stepper-line"></div>
+                <div class="stepper-step" data-step="6">
+                    <div class="stepper-circle">6</div>
+                    <div class="stepper-label">Contrôleur</div>
+                </div>
+                <div class="stepper-line"></div>
+                <div class="stepper-step" data-step="7">
+                    <div class="stepper-circle">7</div>
+                    <div class="stepper-label">Télécommande</div>
+                </div>
+                <div class="stepper-line"></div>
+                <div class="stepper-step" data-step="8">
+                    <div class="stepper-circle">8</div>
+                    <div class="stepper-label">Câble ext.</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Layout principal 2 colonnes -->
+    <div class="main-layout">
+        <!-- Colonne gauche : Configurateur -->
+        <div class="configurator-column">
+            
+            <!-- Etape 1 : Choix du ruban -->
+            <section id="step-strip" class="step">
+                <h2 class="step-title">Choisissez votre ruban LED</h2>
+                <div id="strips-list" class="products-grid"></div>
+            </section>
+
+            <!-- Etape 2 : Choix température (si applicable) -->
+            <section id="step-color-temp" class="step hidden">
+                <div class="step-header">
+                    <h2 class="step-title">Température de couleur</h2>
+                    <span class="tooltip-icon" data-tooltip="• Blanc Chaud (3000K): Ambiance cosy, salon, chambre
+• Blanc Jour (4000K): Neutre, bureau, cuisine
+• Blanc Froid (6000K): Énergisant, garage, atelier">ℹ️</span>
+                </div>
+                <div id="color-temp-options" class="color-temp-grid"></div>
+            </section>
+
+            <!-- Etape 3 : Saisie longueur -->
+            <section id="step-length" class="step hidden">
+                <div class="length-header">
+                    <h2 class="step-title">Longueur souhaitée</h2>
+                    <div class="length-value-display">
+                        <span id="length-display">1</span>m
+                    </div>
+                </div>
+                <div class="length-control">
+                    <input type="range" id="length-input" min="1" max="25" step="1" value="1">
+                    <div id="length-markers" class="length-markers">
+                        <!-- Les repères seront ajoutés dynamiquement par JavaScript -->
+                    </div>
+                </div>
+                
+                <!-- Recommandation de réalimentation -->
+                <div id="power-feed-recommendation" class="power-feed-info" style="display: none;">
+                    <div class="info-box">
+                        <div class="info-icon">ℹ️</div>
+                        <div class="info-content">
+                            <strong>Recommandation de réalimentation</strong>
+                            <p id="power-feed-text"></p>
+                            <div id="power-feed-points" class="power-points"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Note importante -->
+                <div id="power-feed-warning" class="power-feed-warning" style="display: none;">
+                    <strong>Note importante :</strong> <span id="power-feed-warning-text"></span>
+                </div>
+            </section>
+
+            <!-- Etape 4 : Choix d'alimentation -->
+            <section id="step-supply" class="step hidden">
+                <div class="supply-section-wrapper">
+                    <div class="supply-header">
+                        <div class="supply-header-icon">⚡</div>
+                        <h2 class="supply-header-title">Courant 230V → Alimentation</h2>
+                    </div>
+                    
+                    <div class="supply-power-info">
+                        <span id="required-power-info"></span>
+                    </div>
+                    
+                    <div class="supply-recommendation">
+                        Notre configurateur vous conseil une marge au dessus d'environ 20% par rapport à la puissance totale de votre ruban
+                    </div>
+                    
+                    <div id="supplies-list" class="supplies-grid"></div>
+                </div>
+            </section>
+
+            <!-- Etape 5 : Choix câbles (optionnel) -->
+            <section id="step-cable" class="step hidden">
+                <h2 class="step-title">Câbles de connexion <span class="step-title-optional">(facultatif)</span></h2>
+                <div class="step-help">
+                    <div class="help-icon">🔌</div>
+                    <div class="help-content">
+                        <strong>Raccordement alimentation → contrôleur :</strong> 
+                        Choisissez une section adaptée à votre puissance et longueur de câblage.
+                    </div>
+                </div>
+                <div id="cables-list" class="products-grid"></div>
+                
+                <!-- Sélecteur de longueur de câble -->
+                <div id="cable-length-selector" class="hidden length-selector">
+                    <label for="cable-length-input" class="cable-length-label">
+                        Longueur de câble : <span id="cable-length-display" class="cable-length-value">1</span> mètre(s)
+                    </label>
+                    <input type="range" id="cable-length-input" min="1" max="25" step="1" value="1" class="length-slider">
+                    <div class="slider-markers">
+                        <span>1m</span>
+                        <span>25m</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Etape 6 : Contrôleur & Pilotage (Tout-en-un) -->
+            <section id="step-controller-category" class="step hidden">
+                <h2 class="step-title">Contrôleur & Pilotage</h2>
+                
+                <!-- Bloc englobant tout le système de contrôle -->
+                <div class="control-system-container">
+                    <!-- 1. Besoin / Catégories -->
+                    <div class="control-section">
+                        <h3 class="section-title">Quel est votre besoin ?</h3>
+                        <p class="section-subtitle">Sélectionnez une catégorie pour affiner les recommandations de contrôleurs</p>
+                        
+                        <div id="controller-categories" class="categories-grid">
+                            <!-- Les catégories seront insérées ici par JavaScript -->
+                        </div>
+
+                        <a href="#" id="show-all-controllers" class="show-all-link">
+                            Afficher tous les contrôleurs →
+                        </a>
+                    </div>
+
+                    <!-- 2. Modes de contrôle -->
+                    <div class="control-section">
+                        <h3 class="section-title">Comment souhaitez-vous contrôler votre éclairage ?</h3>
+                        <p class="section-subtitle">Sélectionnez un ou plusieurs modes de contrôle (choix multiples possibles)</p>
+                        <div id="control-modes">
+                            <!-- Les modes de contrôle seront insérés ici -->
+                        </div>
+                    </div>
+
+                    <!-- 3. Liste des contrôleurs -->
+                    <div id="controllers-list-container" class="control-section hidden">
+                        <h3 class="section-title">Contrôleurs disponibles</h3>
+                        <div id="multi-zone-warning" class="warning-box hidden">
+                            <div class="warning-icon">⚠️</div>
+                            <div class="warning-content">
+                                <strong>Installation multi-zones détectée</strong>
+                                <p id="warning-text"></p>
+                                <p><strong>Important :</strong> Les sections doivent être physiquement séparées et ne peuvent pas former un ruban continu.</p>
+                            </div>
+                        </div>
+                        <div id="controllers-list" class="products-grid"></div>
+                    </div>
+
+                    <!-- 4. Télécommandes -->
+                    <div id="remotes-list-container" class="control-section hidden">
+                        <h3 class="section-title">Télécommandes</h3>
+                        <div id="remotes-list" class="products-grid"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ÉTAPE 6 BIS : Câbles facultatifs (contrôleur → ruban) -->
+            <section id="step-optional-cables" class="step hidden">
+                <h2 class="step-title">Câbles d'extension <span class="step-title-optional">(facultatif)</span></h2>
+                <div class="step-help">
+                    <div class="help-icon">🔌</div>
+                    <div class="help-content">
+                        <strong>Câbles contrôleur → ruban LED :</strong> Permettent de déporter le ruban LED du contrôleur. 
+                        Sélection automatique selon le type de ruban (3 ou 4 fils).
+                    </div>
+                </div>
+                
+                <div id="optional-cables-groups">
+                    <!-- Groupes de câbles par nombre de fils -->
+                </div>
+
+                <!-- Sélecteur de longueur pour câble facultatif -->
+                <div id="optional-cable-length-selector" class="length-selector hidden">
+                    <label for="optional-cable-length-input" class="cable-length-label">
+                        Longueur du câble d'extension : <span id="optional-cable-length-display" class="cable-length-value">1</span> mètre(s)
+                    </label>
+                    <input 
+                        type="range" 
+                        id="optional-cable-length-input" 
+                        min="1" 
+                        max="25" 
+                        step="1" 
+                        value="1"
+                        class="length-slider"
+                    >
+                    <div class="slider-markers">
+                        <span>1m</span>
+                        <span>20m</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section récapitulatif ruban -->
+            <section id="strip-summary" class="step hidden">
+                <div class="strip-summary-box">
+                    <div class="strip-summary-title-row">
+                        <span class="strip-summary-icon">▌▌▌▌</span>
+                        <span class="strip-summary-name" id="strip-summary-name">Ruban LED</span>
+                        <span class="strip-summary-length" id="strip-summary-length">5m</span>
+                    </div>
+                    
+                    <div class="strip-summary-content">
+                        <div class="power-points-label">
+                            <span class="power-points-count" id="power-points-count">1</span> 
+                            <span class="power-points-text">point d'alimentation</span> 
+                            <span class="power-points-suffix">sur le ruban</span>
+                        </div>
+                        <div class="power-points-buttons" id="power-points-buttons">
+                            <button class="power-point-btn">Point 1: 0m</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section schéma de câblage final -->
+            <section id="wiring-diagram" class="step hidden">
+                <h3 class="diagram-title">Schéma de câblage final</h3>
+                
+                <div class="wiring-diagram-container">
+                    <!-- Alimentation -->
+                    <div class="diagram-item">
+                        <div class="diagram-card diagram-supply">
+                            <div class="diagram-icon">⚡</div>
+                            <div class="diagram-label">Alimentation</div>
+                            <div class="diagram-specs" id="diagram-supply-specs">24V</div>
+                            <button class="diagram-btn">Voir</button>
+                        </div>
+                    </div>
+
+                    <!-- Flèche 1 -->
+                    <div class="diagram-arrow">
+                        <div class="arrow-line"></div>
+                        <div class="arrow-head">→</div>
+                    </div>
+
+                    <!-- Contrôleur -->
+                    <div class="diagram-item">
+                        <div class="diagram-card diagram-controller">
+                            <div class="diagram-icon">📡</div>
+                            <div class="diagram-label">Contrôleur</div>
+                            <div class="diagram-specs" id="diagram-controller-specs">DMX-DIG</div>
+                            <button class="diagram-btn">Voir</button>
+                        </div>
+                    </div>
+
+                    <!-- Ondes sans fil -->
+                    <div class="diagram-arrow diagram-wireless">
+                        <div class="wireless-waves">
+                            <span class="wave">(((</span>
+                            <span class="wave">((</span>
+                            <span class="wave">(</span>
+                        </div>
+                    </div>
+
+                    <!-- Télécommande -->
+                    <div class="diagram-item">
+                        <div class="diagram-card diagram-remote">
+                            <div class="diagram-icon">📶</div>
+                            <div class="diagram-label">Télécommande</div>
+                            <div class="diagram-specs" id="diagram-remote-specs">-</div>
+                            <button class="diagram-btn">Voir</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Flèche verticale vers ruban -->
+                <div class="diagram-arrow-vertical" id="diagram-controller-strip-arrow">
+                    <div class="arrow-line-vertical" id="controller-strip-wires"></div>
+                    <div class="arrow-head-vertical">↓</div>
+                </div>
+
+                <!-- Ruban LED en bas -->
+                <div class="diagram-strip">
+                    <!-- Carte Ruban LED -->
+                    <div class="diagram-card diagram-strip-card">
+                        <!-- Fils d'alimentation à gauche -->
+                        <div class="strip-power-connections" id="strip-power-connections">
+                            <!-- Les connexions seront ajoutées dynamiquement -->
+                        </div>
+                        
+                        <div class="diagram-icon">
+                            <span class="strip-summary-icon">▌▌▌▌</span>
+                        </div>
+                        <div class="diagram-label">Ruban LED</div>
+                        <div class="diagram-specs" id="diagram-strip-specs">SIAM-DIG-3R0</div>
+                        <button class="diagram-btn">Voir</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Récapitulatif de la configuration -->
+            <section id="config-summary-section" class="config-summary-section hidden">
+                <h2 class="config-summary-title">Récapitulatif de votre configuration</h2>
+                
+                <div class="config-summary-content">
+                    <!-- Ruban LED -->
+                    <div class="config-row">
+                        <span class="config-label">Ruban LED sélectionné:</span>
+                        <span class="config-value" id="summary-strip-name">-</span>
+                    </div>
+
+                    <!-- Température de couleur -->
+                    <div class="config-row">
+                        <span class="config-label">Température de couleur:</span>
+                        <span class="config-value" id="summary-strip-temp">-</span>
+                    </div>
+
+                    <!-- Longueur du ruban -->
+                    <div class="config-row">
+                        <span class="config-label">Longueur du ruban LED:</span>
+                        <span class="config-value" id="summary-strip-length">-</span>
+                    </div>
+
+                    <!-- Puissance du ruban -->
+                    <div class="config-row">
+                        <span class="config-label">Puissance du ruban:</span>
+                        <span class="config-value" id="summary-strip-power">-</span>
+                    </div>
+
+                    <!-- Points d'alimentation -->
+                    <div class="config-row">
+                        <span class="config-label">Points d'alimentation:</span>
+                        <span class="config-value" id="summary-feed-points">-</span>
+                    </div>
+
+                    <!-- Puissance nécessaire -->
+                    <div class="config-row">
+                        <span class="config-label">Puissance nécessaire:</span>
+                        <span class="config-value" id="summary-total-power">-</span>
+                    </div>
+
+                    <!-- Alimentation -->
+                    <div class="config-row">
+                        <span class="config-label">Alimentation sélectionnée:</span>
+                        <span class="config-value config-value-link" id="summary-power-supply">-</span>
+                    </div>
+
+                    <!-- Contrôleur (facultatif) -->
+                    <div class="config-row hidden" id="summary-controller-row">
+                        <span class="config-label">Contrôleur sélectionné:</span>
+                        <span class="config-value config-value-link" id="summary-controller">-</span>
+                    </div>
+
+                    <!-- Produits de pilotage -->
+                    <div class="config-row hidden" id="summary-control-products-row">
+                        <span class="config-label">Produits de pilotage:</span>
+                        <span class="config-value"></span>
+                    </div>
+
+                    <!-- Télécommande (indentée, facultatif) -->
+                    <div class="config-row config-row-indent hidden" id="summary-remote-row">
+                        <span class="config-label">Télécommande:</span>
+                        <span class="config-value config-value-link" id="summary-remote">-</span>
+                    </div>
+
+                </div>
+            </section>
+
+        </div>
+
+        <!-- Colonne droite : Panier récapitulatif (sticky) -->
+        <aside class="cart-column">
+            <div class="cart-sticky">
+                <h3 class="cart-title">
+                    Votre configuration
+                    <span class="cart-count" id="cart-count">0</span>
+                </h3>
+                
+                <div id="cart-content" class="cart-items">
+                    <!-- Items ajoutés dynamiquement -->
+                </div>
+                
+                <div class="cart-summary">
+                    <div class="cart-total">
+                        <span>Total TTC</span>
+                        <span id="cart-total">0.00€</span>
+                    </div>
+                </div>
+                
+                <button id="add-to-cart" class="btn-primary btn-add-cart">
+                    Ajouter au panier
+                </button>
+            </div>
+        </aside>
+    </div>
+    </div><!-- Fin wrapper #byled-configurator -->
+
+    <script src="js/configurator.js?v=security-fix"></script>
+</body>
+</html>
