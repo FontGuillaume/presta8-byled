@@ -1,0 +1,156 @@
+{
+    "version": "1.0",
+    "usages": {
+        "gaming": {
+            "id": "gaming",
+            "label": "Ambiance gaming / bureau",
+            "icon": "🎮",
+            "description": "Éclairage pour setup gaming ou bureau",
+            "order": 1,
+            "filters": {
+                "strips": {
+                    "type": ["MONO", "RGB"]
+                },
+                "controllers": {
+                    "usage_includes": ["Classic"]
+                }
+            }
+        },
+        "stairs": {
+            "id": "stairs",
+            "label": "Éclairage d'escaliers",
+            "icon": "🪜",
+            "description": "Détection automatique et éclairage progressif",
+            "order": 2,
+            "filters": {
+                "strips": {
+                    "type": ["MONO", "RGB"]
+                },
+                "controllers": {
+                    "usage_includes": ["Escaliers"]
+                }
+            }
+        },
+        "decoratif_interieur": {
+            "id": "decoratif_interieur",
+            "label": "Éclairage décoratif intérieur",
+            "icon": "🏠",
+            "description": "Salon, chambre, ambiance cosy",
+            "order": 3,
+            "filters": {
+                "strips": {
+                    "type": ["MONO", "RGB"]
+                },
+                "controllers": {
+                    "usage_includes": ["Classic"]
+                }
+            }
+        },
+        "evenementiel": {
+            "id": "evenementiel",
+            "label": "Événementiel / Animation",
+            "icon": "🎭",
+            "description": "Contrôle professionnel, effets complexes, DMX",
+            "order": 4,
+            "filters": {
+                "strips": {
+                    "type": ["RGB", "RGBW"]
+                },
+                "controllers": {
+                    "usage": ["Classic"],
+                    "control_modes": ["dmx", "app", "wifi"]
+                }
+            }
+        },
+        "musical": {
+            "id": "musical",
+            "label": "Événementiel / Musical",
+            "icon": "🎶",
+            "description": "Effets musicaux, synchronisation audio",
+            "order": 5,
+            "filters": {
+                "strips": {
+                    "type": ["RGB"]
+                },
+                "controllers": {
+                    "usage_includes": ["Musical"]
+                }
+            }
+        },
+        "dmx": {
+            "id": "dmx",
+            "label": "Contrôle professionnel DMX",
+            "icon": "🎬",
+            "description": "Installation professionnelle avec DMX512",
+            "order": 6,
+            "filters": {
+                "strips": {
+                    "type": ["RGB"]
+                },
+                "controllers": {
+                    "usage_includes": ["DMX512"]
+                }
+            }
+        }
+    },
+    "effects": {
+        "blanc_fixe": {
+            "id": "blanc_fixe",
+            "label": "Éclairage blanc",
+            "icon": "💡",
+            "description": "Blanc chaud, jour ou froid - Éclairage classique",
+            "order": 1,
+            "compatible_strip_types": ["MONO"]
+        },
+        "rgb_simple": {
+            "id": "rgb_simple",
+            "label": "Couleurs RGB",
+            "icon": "🎨",
+            "description": "Choisir et changer de couleurs",
+            "order": 2,
+            "compatible_strip_types": ["RGB"]
+        },
+        "rgb_avance": {
+            "id": "rgb_avance",
+            "label": "Animations et effets",
+            "icon": "✨",
+            "description": "Défilement, arc-en-ciel, musique, scénarios",
+            "order": 3,
+            "compatible_strip_types": ["RGB"]
+        }
+    },
+    "control_levels": {
+        "simple": {
+            "id": "simple",
+            "label": "Télécommande simple",
+            "icon": "🖲️",
+            "description": "Contrôle par télécommande ou bouton",
+            "order": 1,
+            "required_control_modes": ["remote", "button"]
+        },
+        "app": {
+            "id": "app",
+            "label": "Application smartphone",
+            "icon": "📱",
+            "description": "Contrôle via WiFi et application mobile",
+            "order": 2,
+            "required_control_modes": ["wifi", "app"]
+        },
+        "advanced": {
+            "id": "advanced",
+            "label": "Contrôle avancé",
+            "icon": "🖥️",
+            "description": "WiFi + télécommande + scénarios",
+            "order": 3,
+            "required_control_modes": ["wifi", "remote"]
+        },
+        "motion": {
+            "id": "motion",
+            "label": "Détection de mouvement",
+            "icon": "👋",
+            "description": "Activation automatique par détection",
+            "order": 4,
+            "required_control_modes": ["motion"]
+        }
+    }
+}
